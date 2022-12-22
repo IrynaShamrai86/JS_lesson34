@@ -1,19 +1,23 @@
 //   1)Запитай у користувача його вік і визначи, ким він є: дитиною (0-11), підлітком (12-17),
-//   дорослим (18_59) або пенсіонером (60 ...), передбач можливість введення невірних даних.
+//   дорослим (18-59) або пенсіонером (60 ...), передбач можливість введення невірних даних.
 
 const howOld = prompt('Будь ласка, введіть свій вік')
-if (howOld >= 0 && howOld <=11) {
-    alert('Зрозуміло, ви дитина');
-} else if (howOld >= 12 && howOld <=17) {
-    alert('Зрозуміло, ви підліток');
-} else if (howOld >= 18 && howOld <=59) {
-    alert('Зрозуміло, ви дорослий');
-} else if (howOld >= 60 && howOld <=99) {
-    alert('Зрозуміло, ви пенсіонер');
+
+console.log(howOld)
+if(isNaN(howOld)) {
+    console.log('Ви ввели не число')
 } else if (howOld <0) {
-    alert('Помилка вводу, спробуйте ще раз');
-} else {
-    alert('Стільки не живуть');
+    console.log('Помилка вводу, спробуйте ще раз');
+} else if (howOld >= 0 && howOld <=11) {
+    console.log('Зрозуміло, ви дитина');
+} else if (howOld >= 12 && howOld <=17) {
+    console.log('Зрозуміло, ви підліток');
+} else if (howOld >= 18 && howOld <=59) {
+    console.log('Зрозуміло, ви дорослий');
+} else if (howOld >= 60 && howOld <=99) {
+    console.log('Зрозуміло, ви пенсіонер');
+}  else {
+    console.log('Стільки не живуть');
 }
 
 
@@ -61,15 +65,17 @@ switch (number) {
 //   3)Підрахуй суму всіх чисел в заданому користувачем діапазоні.
 
 function sumAll(arr) {
-    if (arr[0] > arr[1])
-        arr.sort((a, b) => a - b)
+    if (arr[0] > arr[1]) {
+        arr.sort((a, b) => a - b);
+    }
 
-    const newArr = []
+    const newArr = [];
 
-    for(let i = arr[0]; i <= arr[1]; i += 1)
-        newArr.push(i)
+    for(let i = arr[0]; i <= arr[1]; i += 1) {
+        newArr.push(i);
+    }
 
-    return newArr.reduce((acc, cur) => acc + cur)
+    return newArr.reduce((acc, cur) => acc + cur);
 }
 
 console.log(sumAll([3,1]))
@@ -78,8 +84,10 @@ console.log(sumAll([3,1]))
 //   4)Запитай у користувача 2 числа і знайди найбільший спільний дільник.
 
 function nsdTwoNumbers(x, y) {
-    if ((typeof x !== 'number') || (typeof y !== 'number'))
+    if ((typeof x !== 'number') || (typeof y !== 'number')) {
         return false;
+    }
+
     x = Math.abs(x);
     y = Math.abs(y);
     while(y) {
@@ -106,7 +114,7 @@ for(let i = 1; i <= num; i++) {
 
 //   6)Запитай у користувача п’ятирозрядне число і визначи, чи є воно паліндромом.
 
-function checkPalindrome(string) {
+function checkIfPalindrome(string) {
     const arrayValues = string.split('');
     const reverseArrayValues = arrayValues.reverse();
     const reverseString = reverseArrayValues.join('');
@@ -121,7 +129,7 @@ function checkPalindrome(string) {
 
 const string = prompt('Введіть будь-яке число для визначення, чи є воно паліндромом');
 
-checkPalindrome(string);
+checkIfPalindrome(string);
 
 
 //   7)Запитай у користувача суму покупки і виведи суму до оплати зі знижкою:
@@ -129,45 +137,95 @@ checkPalindrome(string);
 //      від 300 до 500 - 5%;
 //      від 500 і вище - 7%.
 
-const purchaseAmount = prompt('Будь ласка, введіть суму своєї покупки')
-if (purchaseAmount >= 500) {
-    let discount = (purchaseAmount*7)/100;
-    let amountToBePaid = purchaseAmount-discount;
-    console.log('Сума до оплати: ${amountToBePaid}');
-} else if (purchaseAmount >= 300) {
-    let discount = (purchaseAmount*5)/100;
-    let amountToBePaid = purchaseAmount-discount;
-    console.log('Сума до оплати: ${amountToBePaid}');
-} else if (purchaseAmount >= 200) {
-    let discount = (purchaseAmount*3)/100;
-    let amountToBePaid = purchaseAmount-discount;
-    console.log('Сума до оплати: ${amountToBePaid}');
-} else {
-    console.log('Вибачте, для даної суми знижка не передбачена');
+const purchaseAmount = prompt('Будь ласка, введіть суму своєї покупки');
+
+const howMuchToPay = (amount) => {
+    const amountNumber = +amount;
+    if(isNaN(amountNumber)) {
+        console.log('Ви ввели не число');
+        return;
+    }
+    let discountAmount = 0;
+    if (amountNumber >= 500) {
+        discountAmount = 7;
+    } else if (amountNumber >= 300) {
+        discountAmount = 5;
+    } else if (amountNumber >= 200) {
+        discountAmount = 3;
+    }
+
+    const discount = (amountNumber*discountAmount)/100;
+    const amountToBePaid = amountNumber-discount;
+    console.log(`Сума до оплати: ${amountToBePaid} грн`);
 }
+
+howMuchToPay(purchaseAmount)
 
 
 //   8)Запитай у користувача 10 чисел і порахуй, скільки він ввів додатніх, від’ємних і нулів.
 //   При цьому також порахуй, скільки з них парних і непарних. Виведи статистику на екран.
 //   Враховуй, що достатньо однієї змінної (не 10) для введення чисел користувачем.
 
-const numbers = prompt('Введіть число для перевірки, додатнє воно чи від"ємне ');
-
-if (numbers >= 0) {
-    if (numbers === 0) {
-        console.log('Введене вами число 0');
-    } else {
-        console.log('Введене вами число додатнє');
-    }
-} else {
-    console.log('Введене вами число від"ємне');
+const emptyArr = [];
+for (let i = 1; i <=10; i++) {
+    const newNumber = prompt('Введіть число для перевірки, додатнє воно чи від"ємне, парне чи непарне (10 з ' + i + ')');
+    emptyArr.push(newNumber);
 }
 
+const filtered = emptyArr.filter((num) => !isNaN(num)) // remove all string (not a number)
+const sortedArr = filtered.map((num) => Number(num)); // transform to number
+
+const getAllPositive = (arr) => {
+    const result = arr.filter((num) => num > 0);
+    console.log('додатніх чисел ' + result.length + ' шт.');
+}
+
+const getAllNegative = (arr) => {
+    const result = arr.filter((num) => num < 0);
+    console.log('від"ємних чисел ' + result.length + ' шт.');
+}
+
+const getAllEven = (arr) => {
+    const result = arr.filter((num) => num % 2  === 0);
+    console.log('парних чисел ' + result.length + ' шт.');
+}
+
+const getAllOdd = (arr) => {
+    const result = arr.filter((num) => num % 2  === !0);
+    console.log('непарних чисел ' + result.length + ' шт.');
+}
+
+const getAllZero = (arr) => {
+    const result = arr.filter((num) => num === 0);
+    console.log('нулів ' + result.length + ' шт.');
+}
+
+getAllPositive(sortedArr);
+getAllNegative(sortedArr);
+getAllEven(sortedArr);
+getAllOdd(sortedArr);
+getAllZero(sortedArr);
 
 
-const nmbr = prompt('Введіть число для перевірки, парне воно чи непарне ');
-const result = (nmbr % 2  === 0) ? 'парне' : 'непарне';
-console.log(`Введене вами число ${result}`);
+//   9)Зацикли відображення днів тижня таким чином: «День тижня. Хочеш побачити наступний день?»
+//   і так до тих пір, поки користувач натискає OK
 
-//   9)Зацикли відображення днів тижня таким чином: «День тижня. Хочеш побачити наступний день? »
-//   і так до тих пір, поки користувач натискає OK.
+const week = [
+    'Понеділок',
+    'Вівторок',
+    'Середа',
+    'Четвер',
+    'П"ятниця',
+    'Субота',
+    'Неділя'
+];
+let iter = 0;
+while(true) {
+    const result = confirm('Натисни ОК, якщо хочеш побачити наступний день');
+    if (result) {
+        console.log(week[iter]);
+        iter = iter === week.length - 1 ? 0 : iter + 1;
+    } else {
+        break;
+    }
+}
